@@ -9,14 +9,15 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen>{
+
   int _selectedItemIndex = 0;
 
-  List<Widget> _screens = <Widget>[
-    TodoListScreen(),
-    DoneListScreen(),
-  ];
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
 
-  void _onItemTapped(int index) {
+  pageChanged(int index){
     setState(() {
       _selectedItemIndex = index;
     });
@@ -35,7 +36,16 @@ class _HomeScreenState extends State<HomeScreen>{
           appBar: AppBar(
             title: Text("TodoX"),
           ),
-          body: _screens.elementAt(_selectedItemIndex),
+          body: PageView(
+            controller: pageController,
+            children: <Widget>[
+              TodoListScreen(),
+              DoneListScreen(),
+            ],
+            onPageChanged: (index){
+              pageChanged(index);
+            },
+          ),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.white,
             items: const <BottomNavigationBarItem>[
@@ -49,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen>{
               ),
             ],
             currentIndex: _selectedItemIndex,
-            onTap: _onItemTapped,
+            onTap: (index){
+              pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
+            },
           ),
         )
     );
