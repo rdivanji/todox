@@ -44,7 +44,7 @@ class _TodoListScreenState extends State<TodoListScreen>{
     final todo = todos[index];
 
     return CheckboxListTile(
-      value: todo.isTodo==true ? false : true,
+      value: todo.isTodo!=true,
       title: Text(todo.text),
       onChanged: (bool isChecked){
         _toggleTodo(todo,isChecked);
