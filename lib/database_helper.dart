@@ -76,7 +76,7 @@ class DatabaseService{
   Future<List<Todo>> getList(bool todo) async{
     final db = await database;
 
-    var res = await db.rawQuery("SELECT * FROM $tableName WHERE isTodo=\"" + todo.toString() + "\"");
+    var res = await db.rawQuery("SELECT * FROM $tableName WHERE isTodo=\'" + todo.toString() + "\'");
     List<Todo> list =
       res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
     return list;
