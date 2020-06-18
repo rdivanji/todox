@@ -58,7 +58,7 @@ class _DoneListScreenState extends State<DoneListScreen>{
             );
           }
           else
-            return CircularProgressIndicator();
+            return Container();
         },
         future: _initData(),
       ),

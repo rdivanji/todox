@@ -64,7 +64,7 @@ class _TodoListScreenState extends State<TodoListScreen>{
             );
           }
           else
-            return CircularProgressIndicator();
+            return Container();
         },
         future: _initData(),
       ),
