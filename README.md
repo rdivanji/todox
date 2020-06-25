@@ -9,7 +9,7 @@ Some screenshots:
   ![](https://imgur.com/4CVi7mX.png) ![](https://imgur.com/5B7X3nr.png) \
   ![](https://imgur.com/bZG4pgN.png) ![](https://imgur.com/bpKYoLj.png) \
   ![](https://imgur.com/tdzGGP1.png) ![](https://imgur.com/RHZqdaQ.png) \
-  ![](https://imgur.com/eMZspdH.png) ![](https://imgur.com/K6GMCNc.png) \
+  ![](https://imgur.com/eMZspdH.png) ![](https://imgur.com/K6GMCNc.png) 
 
 TODO:  
   - [ ] Fix/improve performance
