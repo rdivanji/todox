@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'TodoListScreen.dart';
 import 'DoneListScreen.dart';
+import 'database_helper.dart';
+import 'Todo.dart';
+import 'NewTodoDialog.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -8,6 +12,7 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen>{
+  DatabaseService db = DatabaseService();
 
   int _selectedItemIndex = 0;
 
@@ -20,6 +25,48 @@ class _HomeScreenState extends State<HomeScreen>{
     setState(() {
       _selectedItemIndex = index;
     });
+  }
+
+  _addTodo() async{
+    final todo = await showDialog<Todo>(
+        context: context,
+        builder: (BuildContext context){
+          return NewTodoDialog();
+        }
+    );
+    if (todo != null){
+      setState(() {
+        db.insertTodo(todo);
+      });
+    }
+  }
+
+  clearDones() {
+    setState(() {
+      db.clearList(false);
+    });
+  }
+
+  _clearDonesAlert() {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Are you sure you want to clear the list?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("No"),
+                onPressed: Navigator.of(context).pop,
+              ),
+              FlatButton(
+                child: Text("Yes"),
+                onPressed: () async => [await clearDones(), Navigator.of(context, rootNavigator: true).pop()],
+              )
+            ],
+          );
+        }
+    );
   }
 
   @override
@@ -38,6 +85,12 @@ class _HomeScreenState extends State<HomeScreen>{
           pageChanged(index);
         },
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: _selectedItemIndex==0 ? Text('Add') : Text('Clear'),
+        icon: _selectedItemIndex==0 ? Icon(Icons.add) : Icon(Icons.clear_all),
+        onPressed: _selectedItemIndex==0 ? _addTodo : _clearDonesAlert,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

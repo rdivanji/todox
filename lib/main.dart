@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.black,
         ),
       ),
-      title: "TodoX",
       home: HomeScreen(),
     );
   }

@@ -81,4 +81,14 @@ class DatabaseService{
       res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
     return list;
   }
+
+  Future<void> clearList(bool todo) async{
+    final db = await database;
+
+    await db.delete(
+      tableName,
+      where: "isTodo=\'" + todo.toString() + "\'"
+    );
+  }
+
 }

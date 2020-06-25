@@ -18,38 +18,6 @@ class _DoneListScreenState extends State<DoneListScreen>{
     return dones;
   }
 
-  _clearDones(){
-    setState(() {
-      for(Todo d in dones){
-        db.deleteTodo(d.id);
-      }
-      dones.clear();
-    });
-  }
-
-  _clearDonesAlert() async{
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context){
-        return AlertDialog(
-          title: Text("Do you want to clear the list?"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("No"),
-              onPressed: Navigator.of(context).pop,
-            ),
-            FlatButton(
-              child: Text("Yes"),
-              onPressed: () async => [await _clearDones(), Navigator.of(context, rootNavigator: true).pop()],
-            )
-          ],
-        );
-      }
-    );
-  }
-
-
   Widget _buildItem(BuildContext context, int index){
     final todo = dones[index];
 
@@ -83,10 +51,6 @@ class _DoneListScreenState extends State<DoneListScreen>{
             return Container();
         },
         future: _initData(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.clear_all),
-        onPressed: _clearDonesAlert,
       ),
     );
   }

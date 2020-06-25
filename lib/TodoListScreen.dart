@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'database_helper.dart';
 import 'Todo.dart';
-import 'NewTodoDialog.dart';
 
 class TodoListScreen extends StatefulWidget {
   TodoListScreen();
@@ -14,23 +13,9 @@ class _TodoListScreenState extends State<TodoListScreen>{
   DatabaseService db = DatabaseService();
   List<Todo> todos;
 
-  _initData() async{
+  _initData() async {
     todos = await db.getList(true);
     return todos;
-  }
-
-  _addTodo() async{
-    final todo = await showDialog<Todo>(
-        context: context,
-        builder: (BuildContext context){
-          return NewTodoDialog();
-        }
-    );
-    if (todo != null){
-      setState(() {
-        db.insertTodo(todo);
-      });
-    }
   }
 
   _toggleTodo(Todo todo, bool isChecked){
@@ -67,10 +52,6 @@ class _TodoListScreenState extends State<TodoListScreen>{
             return Container();
         },
         future: _initData(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _addTodo,
       ),
     );
   }
