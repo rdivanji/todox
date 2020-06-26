@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen>{
     keepPage: true,
   );
 
-  pageChanged(int index){
+  _pageChanged(int index){
     setState(() {
       _selectedItemIndex = index;
     });
@@ -82,13 +82,13 @@ class _HomeScreenState extends State<HomeScreen>{
           DoneListScreen(),
         ],
         onPageChanged: (index){
-          pageChanged(index);
+          _pageChanged(index);
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: _selectedItemIndex==0 ? Text('Add Todo') : Text('Clear List'),
-        icon: _selectedItemIndex==0 ? Icon(Icons.add) : Icon(Icons.clear_all), //todo: this code aint pretty
-        onPressed: _selectedItemIndex==0 ? _addTodo : _clearDonesAlert,
+        label: Text(_selectedItemIndex == 0 ? 'Add Todo' : 'Clear List'),
+        icon: Icon(_selectedItemIndex == 0 ? Icons.add : Icons.clear_all),
+        onPressed: _selectedItemIndex == 0 ? _addTodo : _clearDonesAlert,
         elevation: 4.0,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

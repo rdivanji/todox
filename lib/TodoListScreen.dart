@@ -32,7 +32,6 @@ class _TodoListScreenState extends State<TodoListScreen>{
         content: const Text('Done!'),
         action: SnackBarAction(
           label: 'UNDO',
-          //onPressed: _toggleTodo(todo,true),
           onPressed: (){
             _toggleTodo(todo, false);
           },
@@ -45,7 +44,7 @@ class _TodoListScreenState extends State<TodoListScreen>{
     final _todo = _todos[index];
 
     return CheckboxListTile(
-      value: _todo.isTodo!=true, //todo: improve syntax
+      value: !_todo.isTodo,
       title: Text(_todo.text),
       onChanged: (bool isChecked){
         _showToast(_todo);
