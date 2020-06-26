@@ -12,11 +12,11 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen>{
-  DatabaseService db = DatabaseService();
+  DatabaseService _db = DatabaseService();
 
   int _selectedItemIndex = 0;
 
-  PageController pageController = PageController(
+  PageController _pageController = PageController(
     initialPage: 0,
     keepPage: true,
   );
@@ -28,22 +28,22 @@ class _HomeScreenState extends State<HomeScreen>{
   }
 
   _addTodo() async{
-    final todo = await showDialog<Todo>(
+    final _todo = await showDialog<Todo>(
         context: context,
         builder: (BuildContext context){
           return NewTodoDialog();
         }
     );
-    if (todo != null){
+    if (_todo != null){
       setState(() {
-        db.insertTodo(todo);
+        _db.insertTodo(_todo);
       });
     }
   }
 
-  clearDones() {
+  _clearDones() {
     setState(() {
-      db.clearList(false);
+      _db.clearList(false);
     });
   }
 
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen>{
               ),
               FlatButton(
                 child: Text("Yes"),
-                onPressed: () async => [await clearDones(), Navigator.of(context, rootNavigator: true).pop()],
+                onPressed: () async => [await _clearDones(), Navigator.of(context, rootNavigator: true).pop()],
               )
             ],
           );
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen>{
         title: Text("TodoX"),
       ),
       body: PageView(
-        controller: pageController,
+        controller: _pageController,
         children: <Widget>[
           TodoListScreen(),
           DoneListScreen(),
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen>{
         ],
         currentIndex: _selectedItemIndex,
         onTap: (index){
-          pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
+          _pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
         },
       ),
     );

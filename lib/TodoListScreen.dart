@@ -10,42 +10,42 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen>{
-  DatabaseService db = DatabaseService();
-  List<Todo> todos;
+  DatabaseService _db = DatabaseService();
+  List<Todo> _todos;
 
   _initData() async {
-    todos = await db.getList(true);
-    return todos;
+    _todos = await _db.getList(true);
+    return _todos;
   }
 
   _toggleTodo(Todo todo, bool isChecked){
     setState(() {
       todo.isTodo = false;
-      db.updateTodo(todo);
+      _db.updateTodo(todo);
     });
   }
 
   Widget _buildItem(BuildContext context, int index){
-    final todo = todos[index];
+    final _todo = _todos[index];
 
     return CheckboxListTile(
-      value: todo.isTodo!=true,
-      title: Text(todo.text),
+      value: _todo.isTodo!=true,
+      title: Text(_todo.text),
       onChanged: (bool isChecked){
-        _toggleTodo(todo,isChecked);
+        _toggleTodo(_todo,isChecked);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: FutureBuilder(
         builder: (context, snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
               itemBuilder: _buildItem,
-              itemCount: todos.length,
+              itemCount: _todos.length,
             );
           }
           else

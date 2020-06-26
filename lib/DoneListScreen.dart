@@ -10,28 +10,28 @@ class DoneListScreen extends StatefulWidget{
 }
 
 class _DoneListScreenState extends State<DoneListScreen>{
-  DatabaseService db = DatabaseService();
-  List<Todo> dones;
+  DatabaseService _db = DatabaseService();
+  List<Todo> _dones;
 
   _initData() async{
-    dones = await db.getList(false);
-    return dones;
+    _dones = await _db.getList(false);
+    return _dones;
   }
 
   Widget _buildItem(BuildContext context, int index){
-    final todo = dones[index];
+    final _todo = _dones[index];
 
-    _toggleTodo(Todo todo){
+    _toggleTodo(Todo toChange){
       setState(() {
-        todo.isTodo = true;
-        db.updateTodo(todo);
+        toChange.isTodo = true;
+        _db.updateTodo(toChange);
       });
     }
 
     return ListTile(
-      title: Text(todo.text),
+      title: Text(_todo.text),
       onLongPress: (){
-        _toggleTodo(todo);
+        _toggleTodo(_todo);
       },
     );
   }
@@ -44,7 +44,7 @@ class _DoneListScreenState extends State<DoneListScreen>{
           if (snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(
               itemBuilder: _buildItem,
-              itemCount: dones.length,
+              itemCount: _dones.length,
             );
           }
           else
