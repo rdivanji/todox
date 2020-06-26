@@ -18,15 +18,6 @@ class _DoneListScreenState extends State<DoneListScreen>{
     return _dones;
   }
 
-  _showToast() {
-    final _scaffold = Scaffold.of(context);
-    _scaffold.showSnackBar(
-      SnackBar(
-        content: const Text('Press and hold to move back'),
-      ),
-    );
-  }
-
   Widget _buildItem(BuildContext context, int index){
     final _todo = _dones[index];
 
@@ -39,8 +30,15 @@ class _DoneListScreenState extends State<DoneListScreen>{
 
     return ListTile(
       title: Text(_todo.text),
-      onTap: _showToast,
-      onLongPress: (){
+      trailing: IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          setState(() {
+            _db.deleteTodo(_todo.id);
+          });
+        },
+      ),
+      onLongPress: () {
         _toggleTodo(_todo);
       },
     );

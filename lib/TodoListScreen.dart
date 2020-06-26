@@ -29,11 +29,20 @@ class _TodoListScreenState extends State<TodoListScreen>{
     final _scaffold = Scaffold.of(context);
     _scaffold.showSnackBar(
       SnackBar(
+        duration: Duration(seconds: 2),
         content: const Text('Done!'),
         action: SnackBarAction(
           label: 'UNDO',
           onPressed: (){
-            _toggleTodo(todo, false);
+            todo.isTodo = true;
+            _db.updateTodo(todo);
+            _scaffold.hideCurrentSnackBar();
+            /*if the user is still on this screen, then rebuild the widget
+            otherwise it will 'naturally' rebuild once user re-enters the screen.
+            This is implemented because the SnackBar is still interactive even
+            if the user switches views. */
+            if(mounted)
+              setState(() {});
           },
         ),
       ),
