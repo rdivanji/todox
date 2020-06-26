@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen>{
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: _selectedItemIndex==0 ? Text('Add Todo') : Text('Clear List'),
-        icon: _selectedItemIndex==0 ? Icon(Icons.add) : Icon(Icons.clear_all),
+        icon: _selectedItemIndex==0 ? Icon(Icons.add) : Icon(Icons.clear_all), //todo: this code aint pretty
         onPressed: _selectedItemIndex==0 ? _addTodo : _clearDonesAlert,
         elevation: 4.0,
       ),

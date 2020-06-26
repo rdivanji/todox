@@ -20,18 +20,35 @@ class _TodoListScreenState extends State<TodoListScreen>{
 
   _toggleTodo(Todo todo, bool isChecked){
     setState(() {
-      todo.isTodo = false;
+      todo.isTodo = !isChecked;
       _db.updateTodo(todo);
     });
+  }
+
+  _showToast(Todo todo) {
+    final _scaffold = Scaffold.of(context);
+    _scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Done!'),
+        action: SnackBarAction(
+          label: 'UNDO',
+          //onPressed: _toggleTodo(todo,true),
+          onPressed: (){
+            _toggleTodo(todo, false);
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildItem(BuildContext context, int index){
     final _todo = _todos[index];
 
     return CheckboxListTile(
-      value: _todo.isTodo!=true,
+      value: _todo.isTodo!=true, //todo: improve syntax
       title: Text(_todo.text),
       onChanged: (bool isChecked){
+        _showToast(_todo);
         _toggleTodo(_todo,isChecked);
       },
     );
