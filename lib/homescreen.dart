@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todox/SettingsScreen.dart';
 import 'TodoListScreen.dart';
 import 'DoneListScreen.dart';
 import 'database_helper.dart';
 import 'Todo.dart';
 import 'NewTodoDialog.dart';
+import 'SettingsScreen.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -20,6 +22,15 @@ class _HomeScreenState extends State<HomeScreen>{
     initialPage: 0,
     keepPage: true,
   );
+
+  _showSettings() async{
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return SettingsScreen();
+      }
+    );
+  }
 
   _pageChanged(int index){
     setState(() {
@@ -74,6 +85,12 @@ class _HomeScreenState extends State<HomeScreen>{
     return Scaffold(
       appBar: AppBar(
         title: Text("TodoX"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: _showSettings
+          )
+        ],
       ),
       body: PageView(
         controller: _pageController,
