@@ -14,15 +14,14 @@ class _TodoListScreenState extends State<TodoListScreen>{
   List<Todo> _todos;
 
   _initData() async {
-    _todos = await _db.getList(true);
+    _todos = await _db.getList(1); //get the TodoList
     _todos.sort();
     return _todos;
   }
 
-  _toggleTodo(Todo todo, bool isChecked){
+  _toggleTodo(Todo todo){
     setState(() {
-      todo.isTodo = !isChecked;
-      _db.updateTodo(todo);
+      todo.changeStatus();
     });
   }
 
@@ -35,8 +34,7 @@ class _TodoListScreenState extends State<TodoListScreen>{
         action: SnackBarAction(
           label: 'UNDO',
           onPressed: (){
-            todo.isTodo = true;
-            _db.updateTodo(todo);
+            todo.changeStatus();
             _scaffold.hideCurrentSnackBar();
             /*if the user is still on this screen, then rebuild the widget
             otherwise it will 'naturally' rebuild once user re-enters the screen.
@@ -53,12 +51,11 @@ class _TodoListScreenState extends State<TodoListScreen>{
   Widget _buildItem(BuildContext context, int index){
     final _todo = _todos[index];
 
-    return CheckboxListTile(
-      value: !_todo.isTodo,
+    return ListTile(
       title: Text(_todo.text),
-      onChanged: (bool isChecked){
+      onTap: () {
         _showToast(_todo);
-        _toggleTodo(_todo,isChecked);
+        _toggleTodo(_todo);
       },
     );
   }
@@ -69,9 +66,11 @@ class _TodoListScreenState extends State<TodoListScreen>{
       body: FutureBuilder(
         builder: (context, snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
+            return ListView.separated(
+              padding: const EdgeInsets.all(8), //without this, padding of the topmost item is off
               itemBuilder: _buildItem,
               itemCount: _todos.length,
+              separatorBuilder: (context, int index) => const Divider(),
             );
           }
           else

@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen>{
 
   _clearDones() {
     setState(() {
-      _db.clearList(false);
+      _db.clearList(0); //clear the DonesList
     });
   }
 

@@ -14,7 +14,7 @@ class _DoneListScreenState extends State<DoneListScreen>{
   List<Todo> _dones;
 
   _initData() async{
-    _dones = await _db.getList(false);
+    _dones = await _db.getList(0); //get the DonesList
     _dones.sort();
     return _dones;
   }
@@ -24,8 +24,7 @@ class _DoneListScreenState extends State<DoneListScreen>{
 
     _toggleTodo(Todo toChange){
       setState(() {
-        toChange.isTodo = true;
-        _db.updateTodo(toChange);
+        toChange.changeStatus();
       });
     }
 

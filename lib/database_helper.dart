@@ -22,7 +22,7 @@ class DatabaseService{
       join(await getDatabasesPath(), 'list.db'),
       onCreate: (db, version){
         return db.execute(
-          "CREATE TABLE $tableName (date INTEGER PRIMARY KEY, text TEXT, isTodo TEXT)",
+          "CREATE TABLE $tableName (date INTEGER PRIMARY KEY, text TEXT, isTodo INTEGER)",
         );
       },
       version: 1,
@@ -73,21 +73,26 @@ class DatabaseService{
     );
   }
 
-  Future<List<Todo>> getList(bool todo) async{
+  Future<List<Todo>> getList(int type) async{
     final db = await database;
 
-    var res = await db.rawQuery("SELECT * FROM $tableName WHERE isTodo=\'" + todo.toString() + "\'");
+    var res = await db.query(
+      tableName,
+      where: 'isTodo = ?',
+      whereArgs: [type]
+    );
     List<Todo> list =
       res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
     return list;
   }
 
-  Future<void> clearList(bool todo) async{
+  Future<void> clearList(int type) async{
     final db = await database;
 
     await db.delete(
       tableName,
-      where: "isTodo=\'" + todo.toString() + "\'"
+      where: 'isTodo= ?',
+      whereArgs: [type]
     );
   }
 
