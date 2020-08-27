@@ -30,17 +30,22 @@ class _DoneListScreenState extends State<DoneListScreen>{
 
     return ListTile(
       title: Text(_todo.text),
-      trailing: IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          setState(() {
-            _db.deleteTodo(_todo.date);
-          });
-        },
-      ),
-      onLongPress: () {
-        _toggleTodo(_todo);
-      },
+      trailing: Wrap(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.undo),
+            onPressed: () => _toggleTodo(_todo)
+          ),
+          IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              setState(() {
+                _db.deleteTodo(_todo.date);
+              });
+            },
+          ),
+        ],
+      )
     );
   }
 
