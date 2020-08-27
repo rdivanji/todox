@@ -23,7 +23,8 @@ class NewTodoDialog extends StatelessWidget{
         FlatButton(
           child: Text("Add"),
           onPressed: (){
-            final todo = new Todo(id: controller.value.text.hashCode, text: controller.value.text, isTodo: true);
+            print(DateTime.now());
+            final todo = new Todo(date: DateTime.now().millisecondsSinceEpoch , text: controller.value.text, isTodo: true);
             controller.clear();
             Navigator.of(context).pop(todo);
           },

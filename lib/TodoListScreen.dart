@@ -15,6 +15,7 @@ class _TodoListScreenState extends State<TodoListScreen>{
 
   _initData() async {
     _todos = await _db.getList(true);
+    _todos.sort();
     return _todos;
   }
 

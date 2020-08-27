@@ -15,6 +15,7 @@ class _DoneListScreenState extends State<DoneListScreen>{
 
   _initData() async{
     _dones = await _db.getList(false);
+    _dones.sort();
     return _dones;
   }
 
@@ -34,7 +35,7 @@ class _DoneListScreenState extends State<DoneListScreen>{
         icon: Icon(Icons.clear),
         onPressed: () {
           setState(() {
-            _db.deleteTodo(_todo.id);
+            _db.deleteTodo(_todo.date);
           });
         },
       ),

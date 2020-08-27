@@ -1,22 +1,30 @@
-class Todo {
-  int id;
+class Todo implements Comparable<Todo>{
+  int date;
+  /*SQFLite does not support DateTime objects. Creator suggests to use int (millisSinceEpoch)
+  https://pub.dev/packages/sqflite#supported-sqlite-types
+  */
   String text;
   bool isTodo;
 
-  Todo({this.id, this.text, this.isTodo});
+  Todo({this.date, this.text, this.isTodo});
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'date': date,
       'text': text,
       'isTodo': isTodo.toString(),
     };
   }
 
   factory Todo.fromMap(Map<String, dynamic> todo) => new Todo(
-    id: todo["id"],
+    date: todo["date"],
     text: todo["text"],
     isTodo: todo["isTodo"] == "true",
   );
+
+  @override
+  int compareTo(Todo other) {
+    return other.date.compareTo(this.date);
+  }
 
 }

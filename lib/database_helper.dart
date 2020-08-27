@@ -22,7 +22,7 @@ class DatabaseService{
       join(await getDatabasesPath(), 'list.db'),
       onCreate: (db, version){
         return db.execute(
-          "CREATE TABLE $tableName (id INTEGER PRIMARY KEY, text TEXT, isTodo TEXT)",
+          "CREATE TABLE $tableName (date INTEGER PRIMARY KEY, text TEXT, isTodo TEXT)",
         );
       },
       version: 1,
@@ -52,14 +52,14 @@ class DatabaseService{
     await db.update(
       tableName,
       todo.toMap(),
-      // Ensure that the item has a matching id.
-      where: "id = ?",
-      // Pass the Todos id as a whereArg to prevent SQL injection.
-      whereArgs: [todo.id],
+      // Ensure that the item has a matching date.
+      where: "date = ?",
+      // Pass the Todos date as a whereArg to prevent SQL injection.
+      whereArgs: [todo.date],
     );
   }
 
-  Future<void> deleteTodo(int id) async {
+  Future<void> deleteTodo(int date) async {
     // Get a reference to the database.
     final db = await database;
 
@@ -67,9 +67,9 @@ class DatabaseService{
     await db.delete(
       tableName,
       // Use a `where` clause to delete a specific item.
-      where: "id = ?",
-      // Pass the todos id as a whereArg to prevent SQL injection.
-      whereArgs: [id],
+      where: "date = ?",
+      // Pass the todos date as a whereArg to prevent SQL injection.
+      whereArgs: [date],
     );
   }
 
