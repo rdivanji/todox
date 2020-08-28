@@ -10,10 +10,10 @@ class _SettingsScreenState extends State<SettingsScreen>{
 
   _showDarkModeSettings() async{
     showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return DarkModeSettings();
-        }
+      context: context,
+      builder: (BuildContext context){
+        return DarkModeSettings();
+      }
     );
   }
 
