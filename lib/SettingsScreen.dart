@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'DarkModeSettings.dart';
 
 class SettingsScreen extends StatefulWidget{
   @override
@@ -7,6 +8,15 @@ class SettingsScreen extends StatefulWidget{
 
 class _SettingsScreenState extends State<SettingsScreen>{
 
+  _showDarkModeSettings() async{
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return DarkModeSettings();
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -14,19 +24,9 @@ class _SettingsScreenState extends State<SettingsScreen>{
       children: [
         ListTile(
           leading: Icon(Icons.brightness_4),
-          title: Text("Theme"),
-          onTap: null,
+          title: Text("Dark Mode"),
+          onTap: _showDarkModeSettings,
         ),
-        ListTile(
-          leading: Icon(Icons.colorize),
-          title: Text("Color"),
-          onTap: null,
-        ),
-        ListTile(
-          leading: Icon(Icons.view_list),
-          title: Text("View"),
-          onTap: null,
-        )
       ],
     );
   }
